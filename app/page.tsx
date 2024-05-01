@@ -1,5 +1,5 @@
 import React from 'react';
-import GetCard from '@/components/get-card';
+import APIDemo from '@/components/api-demo';
 
 const Home = () => {
   return (
@@ -9,7 +9,7 @@ const Home = () => {
         <p className="text-lg">Serverless and blazing-fast CRUD API</p>
       </div>
       
-      <GetCard />
+      <APIDemo />
     </main>
   );
 };

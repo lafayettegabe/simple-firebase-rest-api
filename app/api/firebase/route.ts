@@ -1,11 +1,12 @@
 import { NextRequest } from 'next/server'
 import { db } from '@/lib/firebase'
-import { addDoc, collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, addDoc, deleteDoc } from 'firebase/firestore'
 
 export async function GET(
     req: NextRequest
 ) {
     try {
+        console.log("GET request received")
         const querySnapshot = await getDocs(collection(db, 'data'));
 
         // Get data from documents (firebase returns with a lot of metadata)
@@ -43,16 +44,17 @@ export async function POST(
     req: NextRequest
 ) {
     try {
+        console.log("POST request received")
+        /*
         const body = await req.json();
         const { data } = body;
         
-        /*
         Test data for debugging
+        */
         const data = {
             lat: (Math.random() * (90 - -90) + -90).toFixed(2),
             lon: (Math.random() * (180 - -180) + -180).toFixed(2)
         }
-        */
 
         // Save data to firebase with timestamp as key (can be replaced or removed if not needed)
         const name = new Date().getTime().toString();
@@ -69,6 +71,27 @@ export async function POST(
         console.log(error)
         return Response.json({
             message: 'Error adding document',
+            data: error
+        }, { status: 500 })
+    }
+}
+
+export async function DELETE(
+    req: NextRequest
+) {
+    try {
+        console.log("DELETE request received")
+        const querySnapshot = await getDocs(collection(db, 'data'));
+        querySnapshot.docs.map(doc => deleteDoc(doc.ref));
+
+        return Response.json({
+            message: 'Documents deleted successfully',
+            data: querySnapshot.docs.length
+        }, { status: 200 })
+    } catch (error) {
+        console.log(error)
+        return Response.json({
+            message: 'Error deleting documents',
             data: error
         }, { status: 500 })
     }

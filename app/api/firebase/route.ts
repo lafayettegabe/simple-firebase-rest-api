@@ -48,8 +48,12 @@ export async function POST(
         /*
         const body = await req.json();
         const { data } = body;
-        
-        Test data for debugging
+
+        Test data for debugging:
+            curl -X POST http://localhost:3000/api/firebase \
+            -H "Content-Type: application/json" \
+            -d '{"data": {"lat": -37.82, "lon": 144.98}}'
+
         */
         const data = {
             lat: (Math.random() * (90 - -90) + -90).toFixed(2),

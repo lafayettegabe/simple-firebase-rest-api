@@ -12,7 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html>
+    <html style={{ overflow: "hidden" }}>
       <body>
         {children}
       </body>

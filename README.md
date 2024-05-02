@@ -68,6 +68,13 @@ export const auth = getAuth(app)
 export const db = getFirestore(app)
 ```
 
+Sample curl to test with external data:
+```
+curl -X POST http://localhost:3000/api/firebase \
+-H "Content-Type: application/json" \
+-d '{"data": {"lat": -37.82, "lon": 144.98}}'
+```
+
 ## Learn More about Next.js
 
 To learn more about Next.js, take a look at the following resources:

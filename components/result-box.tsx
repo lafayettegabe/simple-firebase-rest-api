@@ -1,31 +1,24 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from '@/redux/store';
+import { setDefault, selectApiResult, selectLoading } from '@/redux/features/boxSlice';
 
-const Box = ({ loading, apiResult }: { loading: boolean, apiResult: string }) => {
-  const defaultApiResult = 'Click one of the buttons to call the API.';
-  const [result, setResult] = useState(defaultApiResult);
-
-  useEffect(() => {
-    if (!loading) {
-      setResult(apiResult);
-    } else {
-      setResult('Loading...');
-    }
-  }, [loading, apiResult]);
-
-  const resetResult = () => {
-    setResult(defaultApiResult);
-  };
+const Box = () => {
+  const dispatch = useAppDispatch();
+  const result = useSelector((state: RootState) => selectApiResult(state));
+  const loading = useSelector((state: RootState) => selectLoading(state));
 
   return (
-    <div className="m-8 p-8 bg-gray-800 rounded-lg shadow-md absolute top-0 left-0 w-full max-w-lg overflow-y-auto h-full">
+    <div className="flex min-h-screen min-w-[50%] relative m-8 p-8 bg-gray-800 rounded-lg shadow-md">
       <button
-        onClick={resetResult}
-        className="absolute top-0 right-0 p-2 text-2xl text-white hover:background-red-500"
+        onClick={() => {!loading && dispatch(setDefault())}}
+        className={`absolute top-0 right-0 p-2 text-2xl text-white hover:background-red-500 
+          ${loading ? 'cursor-not-allowed' : 'cursor-pointer'}`}
       >
-        ❌
+        ❌ 
       </button>
-      <pre className="overflow-x-auto text-white">{result}</pre>
+      <pre className="text-white">{result}</pre>
     </div>
   );
 };

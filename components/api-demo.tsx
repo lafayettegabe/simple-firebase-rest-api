@@ -8,9 +8,9 @@ const ApiDemo = () => {
   const [apiResult, setApiResult] = useState('Click one of the buttons to call the API.');
 
   return (
-    <div className="flex flex-col items-center justify-center h-full">
-      <Box loading={loading} apiResult={apiResult} />
-      <ApiButtons setLoading={setLoading} setApiResult={setApiResult} />
+    <div className="flex items-center justify-center min-h-screen min-w-full">
+      <Box />
+      <ApiButtons />
     </div>
   );
 };

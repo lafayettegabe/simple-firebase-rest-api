@@ -45,19 +45,22 @@ export async function POST(
 ) {
     try {
         console.log("POST request received")
-        /*
-        const body = await req.json();
-        const { data } = body;
-
-        Test data for debugging:
-            curl -X POST http://localhost:3000/api/firebase \
-            -H "Content-Type: application/json" \
-            -d '{"data": {"lat": -37.82, "lon": 144.98}}'
-
-        */
-        const data = {
-            lat: (Math.random() * (90 - -90) + -90).toFixed(2),
-            lon: (Math.random() * (180 - -180) + -180).toFixed(2)
+   
+        // code below is for testing purposes only
+        // it generates random data if the request body is empty (POST button in the UI does this for testing)
+        let data;
+        try {
+            const body = await req.json();
+            data = body.data;
+        } catch (error) {
+            if (error instanceof SyntaxError) {
+                data = {
+                    lat: (Math.random() * (90 - -90) + -90).toFixed(2),
+                    lon: (Math.random() * (180 - -180) + -180).toFixed(2)
+                }
+            } else {
+                throw error;
+            }
         }
 
         // Save data to firebase with timestamp as key (can be replaced or removed if not needed)

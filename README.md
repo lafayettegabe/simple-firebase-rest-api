@@ -1,7 +1,11 @@
 # 🔥 Simple Firebase CRUD API
 ### Firebase & Next.js | Blazing-fast and serverless CRUD API
 
-I created this demo app to showcase in class—a straightforward CRUD (without Update 🤫) for reading, adding, and deleting items from Firestore with just a few clicks. It also serves as a simple Next.js starter project integrated with Firebase Firestore, making replication easy.
+~~"CRUD" (without Update 🤫)~~
+
+I created this demo app to showcase in my Operating Systems class for reading, adding, and deleting items from Firestore with just a few clicks. It also serves as a simple Next.js starter project integrated with Firebase Firestore, making replication easy.
+
+The reason behind this project was the need to receive data from a microcontroller using FreeRTOS and store this data in a database for further analysis and potential integration into other applications.
 
 ## Using this code
 

@@ -3,8 +3,8 @@ import "./globals.css";
 import { ReduxProvider } from "@/redux/provider";
 
 export const metadata: Metadata = {
-  title: "Simple Firebase CRUD API",
-  description: "🔥 Firebase & Next.js | Blazing-fast and serverless CRUD API",
+  title: "Simple Firebase REST API",
+  description: "🔥 Firebase & Next.js | Blazing-fast and serverless REST API",
 };
 
 export default function RootLayout({
@@ -15,9 +15,7 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <ReduxProvider>
-          {children}
-        </ReduxProvider>
+        <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>
   );

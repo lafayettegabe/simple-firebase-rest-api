@@ -1,5 +1,5 @@
 {
-  "name": "simple-firebase-crud-api",
+  "name": "simple-firebase-rest-api",
   "version": "0.1.0",
   "private": true,
   "scripts": {

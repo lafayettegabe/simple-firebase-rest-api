@@ -13,8 +13,9 @@
     <img src="https://imgur.com/f3SMCPT.png" width="180" alt="Warp" />
 </a>
 
-# 🔥 Simple Firebase CRUD API
-### Firebase & Next.js | Blazing-fast and serverless CRUD API
+# 🔥 Simple Firebase REST API
+
+### Firebase & Next.js | Blazing-fast and serverless REST API
 
 [![nextjs][nextjs-badge]][nextjs]
 [![react][react-badge]][react]
@@ -33,16 +34,14 @@ I created this demo app to showcase in my Operating Systems class for reading, a
 
 The reason behind this project was the need to receive data from a microcontroller using FreeRTOS and store this data in a database for further analysis and potential integration into other applications.
 
-~~"CRUD" (without Update 🤫)~~
-
 ## Using this code
 
-Remember to update the configuration in ``/lib/firebase.ts`` (the current one will only work for a few more days).
+Remember to update the configuration in `/lib/firebase.ts` (the current one will only work for a few more days).
 
 ```tsx
-import { initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
-import { getFirestore } from 'firebase/firestore'
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 // ============================================================
 // ============================================================
@@ -50,25 +49,26 @@ import { getFirestore } from 'firebase/firestore'
 // 👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCxqCyglAG9tUQlp8hxqpQFlJLKnog0h-w",
-    authDomain: "os-example-313ee.firebaseapp.com",
-    projectId: "os-example-313ee",
-    storageBucket: "os-example-313ee.appspot.com",
-    messagingSenderId: "754955767049",
-    appId: "1:754955767049:web:f03b3eadd402e31a9fd7d8",
-    measurementId: "G-SRV4Y5K1XE"
-  };
+  apiKey: "AIzaSyCxqCyglAG9tUQlp8hxqpQFlJLKnog0h-w",
+  authDomain: "os-example-313ee.firebaseapp.com",
+  projectId: "os-example-313ee",
+  storageBucket: "os-example-313ee.appspot.com",
+  messagingSenderId: "754955767049",
+  appId: "1:754955767049:web:f03b3eadd402e31a9fd7d8",
+  measurementId: "G-SRV4Y5K1XE",
+};
 
 // ☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️
 // ============================================================
 // ============================================================
 
-const app = initializeApp(firebaseConfig)
-export const auth = getAuth(app)
-export const db = getFirestore(app)
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
 ```
 
 Sample curl to test with external data:
+
 ```
 curl -X POST http://localhost:3000/api/firebase \
 -H "Content-Type: application/json" \

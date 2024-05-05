@@ -2,17 +2,40 @@ import { NextRequest } from 'next/server'
 import { db } from '@/lib/firebase'
 import { collection, getDocs, addDoc, deleteDoc } from 'firebase/firestore'
 
+async function checkCollection(table: string) {
+    const collectionRef = collection(db, table);
+    const doc = await getDocs(collectionRef);
+    if (doc.empty) {
+        await addDoc(collectionRef, {});
+    }
+}
+
 export async function GET(
-    req: NextRequest
+    req: NextRequest,
+    context: {
+        params: {
+            table: string
+        }
+    }
 ) {
     try {
-        console.log("GET request received")
-        const querySnapshot = await getDocs(collection(db, 'data'));
+        console.log(`GET request received at path /api/${context.params.table}`)
 
-        // Get data from documents (firebase returns with a lot of metadata)
-        let data = querySnapshot.docs.map(doc => doc.data());
+        const { table } = context.params;
+
+        const querySnapshot = await getDocs(collection(db, table));
+        if (querySnapshot.empty) {
+            await checkCollection(table);
+            return Response.json({
+                message: 'No documents found',
+                data: []
+            }, { status: 200 })
+        }
+
+        // Get data from documents (firebase returns with a lot of metadata) and filter out empty documents
+        let data = querySnapshot.docs.map(doc => doc.data()).filter(doc => Object.keys(doc).length > 0);
         
-        // Sort by timestamp (can be removed if not needed)
+        // Sort by timestamp (can be removed if not needed or replaced with another key)
         data.sort((a, b) => {
             return Number(Object.keys(a)[0]) - Number(Object.keys(b)[0]);
         });
@@ -41,11 +64,19 @@ export async function GET(
 }
 
 export async function POST(
-    req: NextRequest
+    req: NextRequest,
+    context: {
+        params: {
+            table: string
+        }
+    }
 ) {
     try {
-        console.log("POST request received")
+        console.log(`POST request received at path /api/${context.params.table}`)
    
+        const { table } = context.params;
+        await checkCollection(table);
+
         // code below is for testing purposes only
         // it generates random data if the request body is empty (POST button in the UI does this for testing)
         let data;
@@ -65,7 +96,7 @@ export async function POST(
 
         // Save data to firebase with timestamp as key (can be replaced or removed if not needed)
         const name = new Date().getTime().toString();
-        const docRef = await addDoc(collection(db, 'data'), {
+        const docRef = await addDoc(collection(db, table), {
             [name]: data
         });
 
@@ -84,11 +115,20 @@ export async function POST(
 }
 
 export async function DELETE(
-    req: NextRequest
+    req: NextRequest,
+    context: {
+        params: {
+            table: string
+        }
+    }
 ) {
     try {
-        console.log("DELETE request received")
-        const querySnapshot = await getDocs(collection(db, 'data'));
+        console.log(`DELETE request received at path /api/${context.params.table}`)
+
+        const { table } = context.params;
+        await checkCollection(table);
+
+        const querySnapshot = await getDocs(collection(db, table));
         querySnapshot.docs.map(doc => deleteDoc(doc.ref));
 
         return Response.json({
